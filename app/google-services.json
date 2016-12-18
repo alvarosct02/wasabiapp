@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "984181902955",
+    "firebase_url": "https://wasabiapp-389a5.firebaseio.com",
+    "project_id": "wasabiapp-389a5",
+    "storage_bucket": "wasabiapp-389a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984181902955:android:d8b551e5d34678d2",
+        "android_client_info": {
+          "package_name": "com.github.alvarosct02.wasabiapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "984181902955-iuttl8cp27ve1br9fkl8c9tfgvb3f0sm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiNhlI6G49bqqBdqCJKJoFtRVFRIQMqp4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
