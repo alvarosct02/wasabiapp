@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
+import com.facebook.share.internal.ShareFeedContent;
 import com.github.alvarosct02.wasabiapp.R;
 
 /**
@@ -25,4 +26,6 @@ public class MainActivity extends BaseActivity {
         TextView tv_text = (TextView) findViewById(R.id.tv_text);
         tv_text.setText(AccessToken.getCurrentAccessToken().getToken());
     }
+
+
 }
