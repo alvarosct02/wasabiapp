@@ -11,16 +11,17 @@ import com.facebook.login.LoginResult;
 import com.github.alvarosct02.wasabiapp.R;
 import com.github.alvarosct02.wasabiapp.managers.FacebookAuthManager;
 import com.github.alvarosct02.wasabiapp.managers.FirebaseAuthManager;
+import com.github.alvarosct02.wasabiapp.utils.UtilMethods;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity extends BaseActivity implements FacebookAuthManager.IFacebookAuthManager, FirebaseAuth.AuthStateListener {
+public class LoginActivity extends BaseActivity implements FacebookAuthManager.IFacebookAuthManager, FirebaseAuthManager.IFirebaseAuthManager {
 
     private FacebookAuthManager facebookAuthManager;
     private FirebaseAuthManager firebaseAuthManager;
-    private Button bt_login;
+    private Button bt_login, bt_logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class LoginActivity extends BaseActivity implements FacebookAuthManager.I
     public void setupViews() {
         super.setupViews();
         bt_login = (Button) findViewById(R.id.bt_login);
+        bt_logout = (Button) findViewById(R.id.bt_logout);
 
     }
 
@@ -55,12 +57,16 @@ public class LoginActivity extends BaseActivity implements FacebookAuthManager.I
             @Override
             public void onClick(View view) {
                 facebookAuthManager.logInWithReadPermissions();
+                UtilMethods.showLoadingDialog(LoginActivity.this);
+            }
+        });
+        bt_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UtilMethods.upcomingFeature();
             }
         });
     }
-
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -68,14 +74,15 @@ public class LoginActivity extends BaseActivity implements FacebookAuthManager.I
         facebookAuthManager.onActivityResult(requestCode, resultCode, data);
     }
 
-
     @Override
-    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+    public void handleFirebaseLogin(FirebaseAuth firebaseAuth) {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
             // User is signed in
             Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
             Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+            finish();
 
         } else {
             // User is signed out

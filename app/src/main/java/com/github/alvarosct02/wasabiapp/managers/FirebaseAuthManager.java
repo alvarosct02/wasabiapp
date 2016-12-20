@@ -1,11 +1,14 @@
 package com.github.alvarosct02.wasabiapp.managers;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.login.LoginResult;
+import com.github.alvarosct02.wasabiapp.ui.activities.MainActivity;
+import com.github.alvarosct02.wasabiapp.utils.UtilMethods;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -24,10 +27,16 @@ public class FirebaseAuthManager {
     private FirebaseAuth.AuthStateListener authListener;
     private AppCompatActivity loginActivity;
 
-    public FirebaseAuthManager(AppCompatActivity activity, FirebaseAuth.AuthStateListener listener) {
+    public FirebaseAuthManager(AppCompatActivity activity, final IFirebaseAuthManager iFirebase) {
         this.loginActivity = activity;
         this.auth = FirebaseManager.getAuth();
-        this.authListener = listener;
+        this.authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                iFirebase.handleFirebaseLogin(firebaseAuth);
+                UtilMethods.hideLoadingDialog();
+            }
+        };
     }
 
     public void start() {
@@ -56,7 +65,7 @@ public class FirebaseAuthManager {
     }
 
     public interface IFirebaseAuthManager {
-        void handleFirebaseLogin(FirebaseUser user);
+        void handleFirebaseLogin(FirebaseAuth user);
     }
 
 }

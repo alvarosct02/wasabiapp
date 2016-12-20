@@ -10,6 +10,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.github.alvarosct02.wasabiapp.utils.UtilMethods;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,12 +45,14 @@ public class FacebookAuthManager {
                     public void onCancel() {
                         Log.d(TAG, "Login Cancel");
                         Toast.makeText(loginActivity, "Login Cancel", Toast.LENGTH_LONG).show();
+                        UtilMethods.hideLoadingDialog();
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
                         Log.d(TAG, "Login Error");
                         Toast.makeText(loginActivity, exception.getMessage(), Toast.LENGTH_LONG).show();
+                        UtilMethods.hideLoadingDialog();
                     }
                 });
     }
