@@ -23,4 +23,16 @@ public class ExampleInstrumentedTest {
 
         assertEquals("com.github.alvarosct02.wasabiapp", appContext.getPackageName());
     }
+
+
+    @Test
+    public void getRetrofit() throws Exception {
+        // Context of the app under test.
+
+
+        Context appContext = InstrumentationRegistry.getTargetContext();
+
+
+        assertEquals("com.github.alvarosct02.wasabiapp", appContext.getPackageName());
+    }
 }

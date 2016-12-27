@@ -58,15 +58,6 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        bt_join.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                TODO: Only joining to a fixed session
-                Intent i = new Intent(MainActivity.this, GameActivity.class);
-                startActivity(i);
-            }
-        });
-
         bt_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

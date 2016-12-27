@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.github.alvarosct02.wasabiapp.App;
 import com.github.alvarosct02.wasabiapp.R;
 import com.github.alvarosct02.wasabiapp.models.Session;
 import com.github.alvarosct02.wasabiapp.models.User;
 import com.github.alvarosct02.wasabiapp.ui.adapters.UserAdapter;
 import com.github.alvarosct02.wasabiapp.utils.FirebaseRefs;
 import com.github.alvarosct02.wasabiapp.utils.UtilMethods;
+import com.github.alvarosct02.wasabiapp.utils.retrofit.Services;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.MutableData;
@@ -25,16 +27,27 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class GameActivity extends BaseActivity{
 
     RecyclerView rv_leaderboard;
     UserAdapter userAdapter;
     Button bt_add;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         initialize(R.layout.activity_game);
+
+        getUserSession();
     }
 
     @Override
@@ -54,6 +67,26 @@ public class GameActivity extends BaseActivity{
         rv_leaderboard.setLayoutManager(layoutManager);
         rv_leaderboard.setAdapter(userAdapter);
 
+    }
+
+
+    @Inject
+    public Retrofit retrofit;
+
+    private void getUserSession(){
+        ((App) getApplication()).getComponent().inject(this);
+        Call<Session> userSession = retrofit.create(Services.class).getUserSession("9ngflAZe4cXSl0N9SYfcOPetBxx1");
+        userSession.enqueue(new Callback<Session>() {
+            @Override
+            public void onResponse(Call<Session> call, Response<Session> response) {
+                Toast.makeText(GameActivity.this, "Success", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Session> call, Throwable t) {
+                Toast.makeText(GameActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
